@@ -1,0 +1,49 @@
+SOCK_SRV
+========
+
+This is a simple socket server written in C.
+
+
+Source
+------
+The source code tracker is available at
+
+    http://gitorious.org/avtobiff/sock_srv
+
+the source code is available for cloning with a GPLv3 license at
+
+    git://gitorious.org/avtobiff/sock_srv.git
+
+
+Build
+-----
+Invoke the following
+
+    make
+
+In order to build the examples invoke
+
+    make examples
+
+
+Usage
+-----
+Include sock_srv.o and sock_srv.h in your project and then implement an
+accept handler (accept_handler_f, see sock_srv.h) and start the socket
+server by passing port and a function pointer to the accept handler as
+arguments.
+
+    #include "sock_srv.h"
+
+    #define PORT 8000
+
+    void handler_func (int sock) { ... }
+
+    int main (int argc, char** argv) {
+        start_sock_srv (PORT, handler_func);
+
+        return 0;
+    }
+
+
+ -- Per Andersson <avtobiff@gmail.com>  Wed, 23 Feb 2011 23:02:20 +0100
