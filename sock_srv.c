@@ -32,7 +32,7 @@
 
 
 void
-start_sock_srv (int port, accept_handler_fp handler)
+start_sock_srv (int port, accept_handler_t handler)
 {
     int                     sock, cli_sock;
     struct sockaddr_in      srv_addr, cli_addr;
