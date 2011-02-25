@@ -32,10 +32,10 @@
 
 
 void
-start_sock_srv (int port, accept_handler_t handler)
+start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
 {
     int                     sock, cli_sock;
-    struct sockaddr_in      srv_addr, cli_addr;
+    struct sockaddr_in      cli_addr;
     pid_t                   pid;
     socklen_t               cli_len;
 
@@ -48,12 +48,6 @@ start_sock_srv (int port, accept_handler_t handler)
         perror ("socket error");
         exit (1);
     }
-
-    /* create addr struct */
-    memset (&srv_addr, 0, sizeof (srv_addr));
-    srv_addr.sin_family      = AF_INET;
-    srv_addr.sin_port        = htons(port);
-    srv_addr.sin_addr.s_addr = INADDR_ANY;
 
     /* bind socket to addr */
     if (bind (sock, (struct sockaddr *) &srv_addr, sizeof (srv_addr)) < 0) {

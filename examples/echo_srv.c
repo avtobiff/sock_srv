@@ -1,3 +1,5 @@
+#include <netinet/in.h>
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,10 +64,19 @@ signal_handler (int sig)
 int
 main (int argc, char** argv)
 {
+    struct sockaddr_in      srv_addr;
+
+
     signal (SIGINT, signal_handler);
 
+    /* listen address and port */
+    memset (&srv_addr, 0, sizeof (srv_addr));
+    srv_addr.sin_family      = AF_INET;
+    srv_addr.sin_port        = htons (PORT);
+    srv_addr.sin_addr.s_addr = INADDR_ANY;
+
     fprintf (stdout, "starting echo_srv on port %d...\n", PORT);
-    start_sock_srv(PORT, echo);
+    start_sock_srv(srv_addr, echo);
 
     return 0;
 }
