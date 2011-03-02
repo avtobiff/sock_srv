@@ -3,7 +3,7 @@
 
 typedef void (*accept_handler_t) (int sock);
 
-void
+extern void
 start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler);
 
 #endif /* sock_srv.h */
