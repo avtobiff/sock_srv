@@ -35,6 +35,7 @@ void
 start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
 {
     int                     sock, cli_sock;
+    int                     optval;
     struct sockaddr_in      cli_addr;
     pid_t                   pid;
     socklen_t               cli_len;
@@ -46,6 +47,13 @@ start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
     /* create socket */
     if ( (sock = socket (AF_INET, SOCK_STREAM, 0)) < 0) {
         perror ("socket error");
+        exit (1);
+    }
+
+    /* set reuse address socket option */
+    optval = 1;
+    if (setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval)) < 0) {
+        perror ("socket option error");
         exit (1);
     }
 
