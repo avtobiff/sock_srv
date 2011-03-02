@@ -30,13 +30,13 @@ echo (int sock)
         fprintf (stdout, "%d: echoing data\n", pid);
 
         if (bytes_r < 0) {
-            perror("socket read error");
+            perror ("socket read error");
             exit (1);
         }
 
         bytes_w = write (sock, buf, (size_t) bytes_r);
         if (bytes_w < bytes_r) {
-            perror("socket write error");
+            perror ("socket write error");
             exit (1);
         }
     }
@@ -57,7 +57,7 @@ signal_handler (int sig)
         exit (0);
     }
 
-    signal(SIGINT, signal_handler);
+    signal (SIGINT, signal_handler);
 }
 
 
@@ -76,7 +76,7 @@ main (int argc, char** argv)
     srv_addr.sin_addr.s_addr = INADDR_ANY;
 
     fprintf (stdout, "starting echo_srv on port %d...\n", PORT);
-    start_sock_srv(srv_addr, echo);
+    start_sock_srv (srv_addr, echo);
 
     return 0;
 }
