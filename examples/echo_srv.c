@@ -31,13 +31,13 @@ echo (int sock)
 
         if (bytes_r < 0) {
             perror ("socket read error");
-            exit (1);
+            exit (EXIT_FAILURE);
         }
 
         bytes_w = write (sock, buf, (size_t) bytes_r);
         if (bytes_w < bytes_r) {
             perror ("socket write error");
-            exit (1);
+            exit (EXIT_FAILURE);
         }
     }
 
@@ -54,7 +54,7 @@ signal_handler (int sig)
     fprintf (stdout, "\nquit server? [y/N] ");
     c = getchar ();
     if (c == 'y' || c == 'Y') {
-        exit (0);
+        exit (EXIT_SUCCESS);
     }
 
     signal (SIGINT, signal_handler);

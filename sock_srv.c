@@ -47,26 +47,26 @@ start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
     /* create socket */
     if ( (sock = socket (AF_INET, SOCK_STREAM, 0)) < 0) {
         perror ("socket error");
-        exit (1);
+        exit (EXIT_FAILURE);
     }
 
     /* set reuse address socket option */
     optval = 1;
     if (setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval)) < 0) {
         perror ("socket option error");
-        exit (1);
+        exit (EXIT_FAILURE);
     }
 
     /* bind socket to addr */
     if (bind (sock, (struct sockaddr *) &srv_addr, sizeof (srv_addr)) < 0) {
         perror ("bind error");
-        exit (1);
+        exit (EXIT_FAILURE);
     }
 
     /* listen on socket */
     if (listen (sock, TCP_BACKLOG) < 0) {
         perror ("listen error");
-        exit (1);
+        exit (EXIT_FAILURE);
     }
 
     /* forever fork on incoming connections and fire off
@@ -77,7 +77,7 @@ start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
         cli_sock = accept (sock, (struct sockaddr *) &cli_addr, &cli_len);
         if (cli_sock < 0 ) {
             perror ("accept error");
-            exit (1);
+            exit (EXIT_FAILURE);
         }
 
         pid = fork();
@@ -85,13 +85,13 @@ start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
         /* fork error */
         if (pid < 0) {
             perror("fork error");
-            exit (1);
+            exit (EXIT_FAILURE);
         }
         /* let child handle accepted socket */
         else if (pid == 0) {
             close (sock);
             handler (cli_sock);
-            exit (0);
+            exit (EXIT_SUCCESS);
         }
         /* close child socket when done */
         else {
