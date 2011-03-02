@@ -84,7 +84,7 @@ start_sock_srv (struct sockaddr_in srv_addr, accept_handler_t handler)
 
         /* fork error */
         if (pid < 0) {
-            perror("fork error");
+            perror ("fork error");
             exit (EXIT_FAILURE);
         }
         /* let child handle accepted socket */
